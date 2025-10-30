@@ -1,1 +1,1 @@
-"# Metrify - Projeto de Gerenciamento de Medidas" 
+"# Metrify" 
