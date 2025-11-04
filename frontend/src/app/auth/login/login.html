@@ -1,0 +1,34 @@
+<div class="mobile-frame">
+  <div class="login-container">
+<img src="assets/images/logo.png" alt="Logo Metrify" class="logo">
+
+    <h1 class="headline">
+      Acompanhe sua evolução com precisão e leveza
+    </h1>
+
+    <form class="login-form">
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input matInput type="email" id="email" name="email" placeholder="seuemail@email.com" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" id="password" name="password" placeholder="********" required>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="login-button">
+        Entrar
+      </button>
+
+      <span class="register-text">
+        Não tem uma conta?
+        <a routerLink="/register">Cadastre-se</a>
+      </span>
+    </form>
+
+    <footer>
+      <span>Versão 1.0 — Metrify</span>
+    </footer>
+  </div>
+</div>

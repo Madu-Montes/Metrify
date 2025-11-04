@@ -1,0 +1,22 @@
+<mat-card class="register-container">
+  <h2>Criar conta</h2>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Nome</mat-label>
+    <input matInput [(ngModel)]="nome" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="email" type="email" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Senha</mat-label>
+    <input matInput [(ngModel)]="senha" type="password" />
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" (click)="cadastrar()">Cadastrar</button>
+
+  <button mat-button color="accent" (click)="voltar()">Voltar</button>
+</mat-card>

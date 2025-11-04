@@ -1,0 +1,18 @@
+.register-container {
+  width: 90%;
+  max-width: 360px;
+  margin: 80px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+
+  h2 {
+    font-weight: 600;
+    color: #007b83;
+  }
+
+  button {
+    width: 100%;
+  }
+}
