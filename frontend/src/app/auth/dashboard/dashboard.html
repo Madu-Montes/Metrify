@@ -1,5 +1,24 @@
-<mat-card class="dashboard-container">
-  <h2>Bem-vindo ao Metrify</h2>
-  <p>Em breve, você poderá cadastrar suas medidas aqui.</p>
-  <button mat-flat-button color="primary" (click)="logout()">Sair</button>
-</mat-card>
+<div class="mobile-frame">
+  <div class="dashboard-container">
+    
+    <header class="dashboard-header">
+      <img src="assets/images/logo.svg" alt="Logo" class="logo" />
+      <div class="greeting">
+        <h2>Olá, {{ userName }}!</h2>
+        <p>Acompanhe seu progresso 💪</p>
+      </div>
+    </header>
+
+    <section class="measurements">
+      <div class="measurement-card" *ngFor="let medida of medidas">
+        <p class="label">{{ medida.label }}</p>
+        <p class="value">{{ medida.valor }} cm</p>
+      </div>
+    </section>
+
+    <footer class="actions">
+      <button mat-raised-button color="primary" class="nova-medida">+ Nova medida</button>
+      <button mat-stroked-button color="warn" class="delete">Excluir</button>
+    </footer>
+  </div>
+</div>

@@ -1,20 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
+import { Location } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './dashboard.html',
-  styleUrls: ['./dashboard.scss'],
+  styleUrls: ['./dashboard.scss']
 })
-export class DashboardComponent {
-  constructor(private router: Router) {}
+export class Dashboard implements OnInit {
+  constructor(private location: Location) {}
 
-  logout() {
-    this.router.navigate(['/login']);
+  goBack() {
+    this.location.back();
+  }
+
+  userName: string = 'Usuário';
+  medidas = [
+    { label: 'Busto', valor: 92 },
+    { label: 'Tórax', valor: 88 },
+    { label: 'Cintura', valor: 70 },
+    { label: 'Quadril', valor: 96 },
+    { label: 'Coxa', valor: 50 },
+    { label: 'Calçado', valor: 37 },
+  ];
+
+  ngOnInit(): void {
+    const userData = localStorage.getItem('metrify_user');
+    if (userData) {
+      const { name } = JSON.parse(userData);
+      this.userName = name;
+    }
   }
 }

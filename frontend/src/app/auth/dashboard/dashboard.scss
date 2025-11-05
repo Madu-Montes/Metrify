@@ -1,15 +1,144 @@
-.dashboard-container {
-  width: 90%;
-  max-width: 360px;
-  margin: 100px auto;
-  text-align: center;
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #eaeaea;
+}
 
-  h2 {
-    font-weight: 600;
-    color: #007b83;
+.back-button {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  z-index: 10;
+  padding: 0.5rem;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2.5;
   }
 
+  &:hover {
+    color: #555;
+  }
+}
+
+.mobile-frame {
+  width: 390px;
+  height: 844px;
+  border: 12px solid #000;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.25);
+  background-color: #fafafa;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-container {
+  width: 100%;
+  height: 100%;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: left;
+  margin-bottom: 2rem;
+
+  .logo {
+    width: 64px;
+    height: auto;
+  }
+
+  .greeting {
+    text-align: left;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+      color: #333;
+    }
+
+    p {
+      font-size: 14px;
+      color: #777;
+      margin: 0;
+    }
+  }
+}
+
+.measurements {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+
+  .measurement-card {
+    background-color: #788D83;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    height: 50px;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .label {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .value {
+      font-size: 16px;
+      font-weight: 600;
+      color: #000;
+      background-color: #fff;
+      height: 39px;
+      width: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      margin-right: -10px;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin-top: 2rem;
+
   button {
-    margin-top: 24px;
+    flex: 1;
+    margin: 0 0.5rem;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 0.8rem;
+  }
+
+  .nova-medida{
+    border: 1px solid #256D4B;
   }
 }
