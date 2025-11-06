@@ -1,22 +1,21 @@
-<mat-card class="register-container">
-  <h2>Criar conta</h2>
+<div class="mobile-frame">
 
-  <mat-form-field appearance="outline">
-    <mat-label>Nome</mat-label>
-    <input matInput [(ngModel)]="nome" />
-  </mat-form-field>
+  <div class="register-container">
+    <div class="register-header">
+      <img src="assets/images/logo.svg" alt="Logo" class="logo" />
+      <h2>Minhas Medidas</h2>
+    </div>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Email</mat-label>
-    <input matInput [(ngModel)]="email" type="email" />
-  </mat-form-field>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="input-group" *ngFor="let field of ['busto', 'torax', 'cintura', 'quadril', 'coxa', 'calcado']">
+        <label [for]="field">{{ field | titlecase }}:</label>
+        <input [id]="field" type="text" formControlName="{{ field }}" placeholder="XXcm" />
+      </div>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Senha</mat-label>
-    <input matInput [(ngModel)]="senha" type="password" />
-  </mat-form-field>
-
-  <button mat-flat-button color="primary" (click)="cadastrar()">Cadastrar</button>
-
-  <button mat-button color="accent" (click)="voltar()">Voltar</button>
-</mat-card>
+      <div class="actions">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-outline" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

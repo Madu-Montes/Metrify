@@ -16,10 +16,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './login.html',
-  styleUrls: ['./login.scss']
+  styleUrls: ['./login.scss'],
 })
 export class Login {
   loginForm: any;
@@ -32,17 +32,37 @@ export class Login {
   }
 
   onSubmit(): void {
+  if (this.loginForm.invalid) {
+    this.loginForm.markAllAsTouched();
+    return;
+  }
+
+  const { email, senha } = this.loginForm.value;
+
+  if (email === 'maria@teste.com' && senha === '123456') {
+    localStorage.setItem('metrify_user', JSON.stringify({ name: 'Maria', email }));
+    this.router.navigate(['/dashboard']);
+  } else {
+    alert('Credenciais inválidas');
+  }
+}
+
+  /* onSubmit(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
     }
 
     const { email, senha } = this.loginForm.value;
-    if (email === 'maria@teste.com' && senha === '123456') {
-      localStorage.setItem('metrify_user', JSON.stringify({ name: 'Maria', email }));
+    const users = JSON.parse(localStorage.getItem('metrify_users') || '[]');
+
+    const user = users.find((u: any) => u.email === email && u.senha === senha);
+
+    if (user) {
+      localStorage.setItem('metrify_user', JSON.stringify(user));
       this.router.navigate(['/dashboard']);
     } else {
-      alert('Credenciais inválidas');
+      alert('Credenciais inválidas. Verifique seu email e senha.');
     }
-  }
+  } */
 }

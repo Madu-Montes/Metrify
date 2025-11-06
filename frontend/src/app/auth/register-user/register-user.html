@@ -1,0 +1,29 @@
+<div class="mobile-frame">
+  <div class="register-user-container">
+    <img src="assets/images/logo.svg" alt="Logo" class="logo" />
+    <h2>Criar Conta</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput placeholder="Seu nome" formControlName="nome" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="seuemail@email.com" formControlName="email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Senha</mat-label>
+        <input matInput placeholder="********" formControlName="senha" type="password" />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" class="btn-primary">
+        Cadastrar
+      </button>
+
+      <p>Já tem uma conta? <a routerLink="/login">Entrar</a></p>
+    </form>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
+import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -12,10 +12,15 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./dashboard.scss']
 })
 export class Dashboard implements OnInit {
-  constructor(private location: Location) {}
+
+  constructor(private location: Location, private router: Router) {}
 
   goBack() {
     this.location.back();
+  }
+
+  novaMedida() {
+    this.router.navigate(['/register']);
   }
 
   userName: string = 'Usuário';

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { RegisterUserComponent } from './auth/register-user/register-user';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -9,10 +10,15 @@ export const routes: Routes = [
   },
   {
     path: 'register',
-    loadComponent: () => import('./auth/register/register').then(m => m.RegisterComponent),
+    loadComponent: () => import('./auth/register/register').then(m => m.Register),
   },
   {
     path: 'dashboard',
     loadComponent: () => import('./auth/dashboard/dashboard').then(m => m.Dashboard),
   },
+  {
+    path: 'register-user',
+    component: RegisterUserComponent
+  },
+  { path: '**', redirectTo: 'login' } 
 ];

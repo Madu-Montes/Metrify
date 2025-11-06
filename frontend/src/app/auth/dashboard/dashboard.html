@@ -1,6 +1,6 @@
 <div class="mobile-frame">
   <div class="dashboard-container">
-    
+
     <header class="dashboard-header">
       <img src="assets/images/logo.svg" alt="Logo" class="logo" />
       <div class="greeting">
@@ -17,8 +17,12 @@
     </section>
 
     <footer class="actions">
-      <button mat-raised-button color="primary" class="nova-medida">+ Nova medida</button>
-      <button mat-stroked-button color="warn" class="delete">Excluir</button>
+       <button class="btn btn-outline" (click)="novaMedida()">+ Nova medida</button>
+
+      <button class="btn btn-primary">
+        <i class="bi bi-trash"></i>
+      </button>
+
     </footer>
   </div>
 </div>

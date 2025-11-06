@@ -92,7 +92,7 @@
   margin: 1rem 0;
 
   .measurement-card {
-    background-color: #788D83;
+    background-color: #788d83;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     width: 280px;
@@ -127,7 +127,6 @@
 .actions {
   display: flex;
   justify-content: space-between;
-  width: 90%;
   margin-top: 2rem;
 
   button {
@@ -138,7 +137,19 @@
     padding: 0.8rem;
   }
 
-  .nova-medida{
-    border: 1px solid #256D4B;
+  .btn-outline {
+    border: 1px solid #256d4b;
+    width: 250px;
+  }
+
+  .btn-primary{
+    background-color: #256d4b;
+    width: 30px;
+    border-radius: 10px;
+    font-size: 25px;
+  }
+  .btn-primary:hover {
+    background-color: #1e5239;
+
   }
 }
