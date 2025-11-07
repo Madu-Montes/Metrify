@@ -1,5 +1,4 @@
 <div class="mobile-frame">
-
   <div class="register-container">
     <div class="register-header">
       <img src="assets/images/logo.svg" alt="Logo" class="logo" />
@@ -7,9 +6,21 @@
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="input-group" *ngFor="let field of ['busto', 'torax', 'cintura', 'quadril', 'coxa', 'calcado']">
+      <div
+        class="input-group"
+        *ngFor="let field of ['busto', 'torax', 'cintura', 'quadril', 'coxa', 'calçado']"
+      >
         <label [for]="field">{{ field | titlecase }}:</label>
-        <input [id]="field" type="text" formControlName="{{ field }}" placeholder="XXcm" />
+        <input
+          [id]="field"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          formControlName="{{ field }}"
+          placeholder="{{ field === 'calçado' ? 'nº' : 'cm' }}"
+          maxlength="{{ field === 'calçado' ? 2 : 3 }}"
+          (input)="onInputNumber($event, field)"
+        />
+
       </div>
 
       <div class="actions">

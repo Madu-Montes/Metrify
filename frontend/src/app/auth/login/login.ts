@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router'; 
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -32,20 +33,22 @@ export class Login {
   }
 
   onSubmit(): void {
-  if (this.loginForm.invalid) {
-    this.loginForm.markAllAsTouched();
-    return;
-  }
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
 
-  const { email, senha } = this.loginForm.value;
+    const { email, senha } = this.loginForm.value;
 
-  if (email === 'maria@teste.com' && senha === '123456') {
-    localStorage.setItem('metrify_user', JSON.stringify({ name: 'Maria', email }));
-    this.router.navigate(['/dashboard']);
-  } else {
-    alert('Credenciais inválidas');
+    if (email === 'maria@teste.com' && senha === '123456') {
+      localStorage.setItem('metrify_user', JSON.stringify({ name: 'Maria', email }));
+      this.router.navigate(['/dashboard']);
+    } else {
+      alert('Credenciais inválidas');
+    }
   }
 }
+
 
   /* onSubmit(): void {
     if (this.loginForm.invalid) {
@@ -65,4 +68,3 @@ export class Login {
       alert('Credenciais inválidas. Verifique seu email e senha.');
     }
   } */
-}

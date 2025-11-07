@@ -1,12 +1,13 @@
 <div class="mobile-frame">
   <div class="register-user-container">
     <img src="assets/images/logo.svg" alt="Logo" class="logo" />
-    <h2>Criar Conta</h2>
+    <h2>Cadastre-se</h2>
+    <span>E fique por dentro de cada medida</span>
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nome</mat-label>
-        <input matInput placeholder="Seu nome" formControlName="nome" />
+        <input matInput placeholder="Seu nome" formControlName="nome" maxlength="40" />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
@@ -16,10 +17,15 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Senha</mat-label>
-        <input matInput placeholder="********" formControlName="senha" type="password" />
+        <input matInput type="password" placeholder="********" formControlName="senha" minlength="6" maxlength="20"/>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit" class="btn-primary">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Confirmar Senha</mat-label>
+        <input matInput type="password" placeholder="********" formControlName="confirmarSenha" />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" class="btn-outline">
         Cadastrar
       </button>
 

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,26 +19,40 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './register-user.html',
   styleUrls: ['./register-user.scss']
 })
-export class RegisterUserComponent {
+export class RegisterUser implements OnInit {
   registerForm: any;
 
-  constructor(private fb: FormBuilder, private router: Router) {
-    this.registerForm = this.fb.group({
-      nome: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      senha: ['', [Validators.required, Validators.minLength(6)]],
-    });
+  constructor(private fb: FormBuilder, private router: Router) {}
+
+  ngOnInit(): void {
+    this.registerForm = this.fb.group(
+      {
+        nome: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        senha: ['', [Validators.required, Validators.minLength(6)]],
+        confirmarSenha: ['', Validators.required]
+      },
+      { validators: this.passwordMatchValidator }
+    );
+  }
+
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const senha = control.get('senha')?.value;
+    const confirmarSenha = control.get('confirmarSenha')?.value;
+    return senha === confirmarSenha ? null : { senhaMismatch: true };
   }
 
   onSubmit(): void {
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
+      if (this.registerForm.errors?.['senhaMismatch']) {
+        alert('As senhas não coincidem!');
+      }
       return;
     }
 
     const { nome, email, senha } = this.registerForm.value;
 
-    // Salva o usuário no localStorage (simulado)
     const users = JSON.parse(localStorage.getItem('metrify_users') || '[]');
     users.push({ nome, email, senha });
     localStorage.setItem('metrify_users', JSON.stringify(users));

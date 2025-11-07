@@ -1,28 +1,38 @@
 <div class="mobile-frame">
   <div class="dashboard-container">
-
-    <header class="dashboard-header">
-      <img src="assets/images/logo.svg" alt="Logo" class="logo" />
-      <div class="greeting">
-        <h2>Olá, {{ userName }}!</h2>
-        <p>Acompanhe seu progresso 💪</p>
+    <div class="dashboard-frame">
+      <div class="dashboard-header">
+        <img src="assets/images/logo.svg" alt="Logo" class="logo" />
+        <h1>Olá, {{ userName }} 👋</h1>
+        <p>Suas medidas cadastradas:</p>
       </div>
-    </header>
 
-    <section class="measurements">
-      <div class="measurement-card" *ngFor="let medida of medidas">
-        <p class="label">{{ medida.label }}</p>
-        <p class="value">{{ medida.valor }} cm</p>
+      <div class="medidas-container" *ngIf="medidas.length > 0; else vazio">
+        <div class="medida-card" *ngFor="let medida of medidas">
+          <label>{{ medida.label }}</label>
+          <div class="valor">{{ medida.valor }} cm</div>
+        </div>
       </div>
-    </section>
 
-    <footer class="actions">
-       <button class="btn btn-outline" (click)="novaMedida()">+ Nova medida</button>
+      <ng-template #vazio>
+        <p class="mensagem-vazia">Nenhuma medida cadastrada ainda 😅</p>
+      </ng-template>
 
-      <button class="btn btn-primary">
-        <i class="bi bi-trash"></i>
-      </button>
+      <div class="actions">
+        <button mat-raised-button color="primary" (click)="novaMedida()">
+          <mat-icon>add</mat-icon>
+          Nova Medida
+        </button>
 
-    </footer>
+        <button
+          mat-icon-button
+          color="warn"
+          class="btn-delete"
+          (click)="abrirModalExcluirTodas()"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
