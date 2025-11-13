@@ -1,38 +1,38 @@
 <div class="mobile-frame">
   <div class="dashboard-container">
-    <div class="dashboard-frame">
-      <div class="dashboard-header">
-        <img src="assets/images/logo.svg" alt="Logo" class="logo" />
-        <h1>Olá, {{ userName }} 👋</h1>
-        <p>Suas medidas cadastradas:</p>
-      </div>
+    <div class="dashboard-header">
+      <img src="assets/images/logo.svg" alt="Logo" class="logo" />
+      <h2>Olá, {{ userName }}!</h2>
+    </div>
 
-      <div class="medidas-container" *ngIf="medidas.length > 0; else vazio">
-        <div class="medida-card" *ngFor="let medida of medidas">
-          <label>{{ medida.label }}</label>
-          <div class="valor">{{ medida.valor }} cm</div>
+    <div class="medidas-section" *ngIf="medidas.length > 0; else vazio">
+      <div class="medida-card" *ngFor="let medida of medidas">
+        <label>{{ medida.label }}:</label>
+        <div class="valor-box">
+          <span>{{ medida.valor }}</span>
+          <span class="unidade">{{ medida.label === 'Calçado' ? 'nº' : 'cm' }}</span>
         </div>
       </div>
-
-      <ng-template #vazio>
-        <p class="mensagem-vazia">Nenhuma medida cadastrada ainda 😅</p>
-      </ng-template>
-
-      <div class="actions">
-        <button mat-raised-button color="primary" (click)="novaMedida()">
-          <mat-icon>add</mat-icon>
-          Nova Medida
-        </button>
-
-        <button
-          mat-icon-button
-          color="warn"
-          class="btn-delete"
-          (click)="abrirModalExcluirTodas()"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
     </div>
+
+    <ng-template #vazio>
+      <p class="empty">Nenhuma medida cadastrada ainda 😅</p>
+    </ng-template>
+
+    <div class="actions">
+      <button type="button" class="btn btn-outline" (click)="novaMedida()">
+        + Nova Medida
+      </button>
+
+      <button *ngIf="medidas.length > 0" type="button" class="btn btn-circle" (click)="abrirModalExcluirTodas()">
+        <i class="bi bi-trash"></i>
+      </button>
+
+      <button mat-stroked-button color="accent" type="button" class="btn-outline" (click)="verCodigoAcesso()">
+        Ver meu código de acesso
+      </button>
+    </div>
+
+
   </div>
 </div>

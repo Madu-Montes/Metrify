@@ -1,0 +1,18 @@
+<div class="mobile-frame">
+  <div class="code-access-container">
+    <img src="assets/images/logo.svg" alt="Logo" class="logo" />
+    <h2>Gerar código de acesso</h2>
+
+    <div class="qr-wrapper" *ngIf="qrUrl">
+      
+      <img [src]="qrUrl" alt="QR Code" class="qr" />
+    </div>
+
+    <p class="code monospace">{{ userCode }}</p>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="copiarCodigo()">Copiar código</button>
+      <button mat-stroked-button (click)="voltar()">Voltar</button>
+    </div>
+  </div>
+</div>

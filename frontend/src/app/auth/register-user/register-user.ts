@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
-import { Router } from '@angular/router';
+import {
+  FormBuilder,
+  Validators,
+  ReactiveFormsModule,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,10 +20,11 @@ import { MatButtonModule } from '@angular/material/button';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    RouterModule,
   ],
   templateUrl: './register-user.html',
-  styleUrls: ['./register-user.scss']
+  styleUrls: ['./register-user.scss'],
 })
 export class RegisterUser implements OnInit {
   registerForm: any;
@@ -30,7 +37,7 @@ export class RegisterUser implements OnInit {
         nome: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         senha: ['', [Validators.required, Validators.minLength(6)]],
-        confirmarSenha: ['', Validators.required]
+        confirmarSenha: ['', Validators.required],
       },
       { validators: this.passwordMatchValidator }
     );
@@ -52,12 +59,25 @@ export class RegisterUser implements OnInit {
     }
 
     const { nome, email, senha } = this.registerForm.value;
+    
+    const userCode = crypto?.randomUUID?.() ?? this.simpleRandomCode();
+
+    const user = { nome, email, senha, code: userCode };
 
     const users = JSON.parse(localStorage.getItem('metrify_users') || '[]');
-    users.push({ nome, email, senha });
+    users.push(user);
     localStorage.setItem('metrify_users', JSON.stringify(users));
 
+    localStorage.setItem('metrify_user', JSON.stringify(user));
+
     alert('Conta criada com sucesso!');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/code-access']);
+  }
+
+  private simpleRandomCode(len = 8): string {
+    const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+    let s = '';
+    for (let i = 0; i < len; i++) s += chars.charAt(Math.floor(Math.random() * chars.length));
+    return s;
   }
 }

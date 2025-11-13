@@ -24,11 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class Register implements OnInit {
   form!: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private location: Location
-  ) {}
+  constructor(private fb: FormBuilder, private router: Router, private location: Location) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -37,7 +33,7 @@ export class Register implements OnInit {
       cintura: ['', [Validators.required, Validators.pattern(/^\d{1,3}$/)]],
       quadril: ['', [Validators.required, Validators.pattern(/^\d{1,3}$/)]],
       coxa: ['', [Validators.required, Validators.pattern(/^\d{1,3}$/)]],
-     calçado: ['', [Validators.pattern(/^\d{1,2}$/)]],
+      calcado: ['', [Validators.pattern(/^\d{1,2}$/)]],
     });
 
     const medidasSalvas = localStorage.getItem('metrify_medidas');
@@ -61,11 +57,11 @@ export class Register implements OnInit {
   }
 
   onInputNumber(event: any, field: string): void {
-  const input = event.target as HTMLInputElement;
-  const maxLength = field === 'calçado' ? 2 : 3;
-  const numericValue = input.value.replace(/\D/g, '');
-  this.form.get(field)?.setValue(input.value);
-}
+    const input = event.target as HTMLInputElement;
+    const maxLength = field === 'calçado' ? 2 : 3;
+    const numericValue = input.value.replace(/\D/g, '');
+    this.form.get(field)?.setValue(input.value);
+  }
 
   cancelar(): void {
     this.location.back();
@@ -76,4 +72,9 @@ export class Register implements OnInit {
     return !!(control && control.invalid && control.touched);
   }
 
+  verCodigoAcesso(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.router.navigate(['/codigo-acesso']);
+  }
 }

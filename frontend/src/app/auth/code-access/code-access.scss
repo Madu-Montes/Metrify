@@ -1,0 +1,71 @@
+@use 'sass:color';
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #eaeaea;
+}
+
+.mobile-frame {
+  width: 390px;
+  height: 844px;
+  border: 12px solid #000;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.25);
+  background-color: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.code-access-container {
+  width: 90%;
+  text-align: center;
+  padding-top: 1rem;
+
+  .logo {
+    width: 64px;
+    margin: 0 auto 1rem;
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+    color: #256d4b;
+  }
+
+  .qr-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+    background: #fff;
+    padding: .5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+
+    .qr {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      display: block;
+    }
+  }
+
+  .code {
+    font-family: monospace;
+    display: inline-block;
+    padding: .5rem 1rem;
+    border-radius: 8px;
+    background: #f5f5f5;
+    margin-bottom: 1rem;
+  }
+
+  .actions {
+    display: flex;
+    gap: .75rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+}

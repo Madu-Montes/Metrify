@@ -37,18 +37,6 @@ export class Dashboard implements OnInit {
 
     const medidasSalvas = localStorage.getItem('metrify_medidas');
     this.medidas = medidasSalvas ? JSON.parse(medidasSalvas) : [];
-
-    if (this.userEmail === 'maria@dados.com' && this.medidas.length === 0) {
-      this.medidas = [
-        { label: 'Busto', valor: 90 },
-        { label: 'Tórax', valor: 85 },
-        { label: 'Cintura', valor: 68 },
-        { label: 'Quadril', valor: 96 },
-        { label: 'Coxa', valor: 54 },
-        { label: 'Calçado', valor: 36 },
-      ];
-      localStorage.setItem('metrify_medidas', JSON.stringify(this.medidas));
-    }
   }
 
   novaMedida() {
@@ -58,7 +46,8 @@ export class Dashboard implements OnInit {
   abrirModalExcluirTodas() {
     const dialogRef = this.dialog.open(DialogConfirmacao, {
       width: '300px',
-      data: { medida: { label: 'todas as medidas' } },
+      panelClass: 'modal-excluir',
+      data: { medida: { label: 'suas medidas' } },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -68,22 +57,38 @@ export class Dashboard implements OnInit {
       }
     });
   }
+
+  verCodigoAcesso() {
+    this.router.navigate(['/code-access']);
+  }
 }
 
 @Component({
   selector: 'dialog-confirmacao',
+  standalone: true,
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatDialogModule],
   template: `
-    <h2 mat-dialog-title>Excluir Medida</h2>
-    <mat-dialog-content>
-      Tem certeza que deseja excluir <strong>{{ data.medida.label }}</strong
-      >?
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-button (click)="onCancel()">Cancelar</button>
-      <button mat-raised-button color="warn" (click)="onConfirm()">Excluir</button>
-    </mat-dialog-actions>
+    <div class="confirm-modal">
+      <button class="close-btn" (click)="onCancel()" aria-label="Fechar">
+        <i class="bi bi-x-lg"></i>
+      </button>
+
+      <h3>Excluir minhas medidas</h3>
+      <p>Tem certeza de que deseja excluir <strong>{{ data.medida.label }}</strong>?</p>
+
+      <div class="dialog-actions">
+        <button mat-button (click)="onCancel()">Cancelar</button>
+        <button mat-raised-button color="warn" (click)="onConfirm()">Excluir</button>
+      </div>
+    </div>
   `,
-  imports: [MatDialogContent, MatDialogActions],
+  styles: [`
+    .confirm-modal { position: relative; padding: 1rem 0.5rem; color: #fff; }
+    .confirm-modal h3 { margin: 0 0 8px; color: #fff; font-size: 18px; }
+    .confirm-modal p { margin: 0 0 16px; color: rgba(255,255,255,0.95); }
+    .close-btn { position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: #fff; }
+    .dialog-actions { display:flex; gap:0.5rem; justify-content:flex-end; }
+  `]
 })
 export class DialogConfirmacao {
   constructor(
@@ -94,7 +99,6 @@ export class DialogConfirmacao {
   onCancel(): void {
     this.dialogRef.close('cancel');
   }
-
   onConfirm(): void {
     this.dialogRef.close('confirm');
   }
