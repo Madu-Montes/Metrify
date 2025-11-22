@@ -7,9 +7,7 @@ import {
   MatDialog,
   MatDialogModule,
   MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogContent,
-  MatDialogActions,
+  MatDialogRef
 } from '@angular/material/dialog';
 
 @Component({
@@ -45,9 +43,9 @@ export class Dashboard implements OnInit {
 
   abrirModalExcluirTodas() {
     const dialogRef = this.dialog.open(DialogConfirmacao, {
-      width: '300px',
+      width: '360px',
       panelClass: 'modal-excluir',
-      data: { medida: { label: 'suas medidas' } },
+      data: { medida: { label: 'todas as suas medidas' } },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -63,31 +61,78 @@ export class Dashboard implements OnInit {
   }
 }
 
+
 @Component({
   selector: 'dialog-confirmacao',
   standalone: true,
   imports: [CommonModule, MatButtonModule, MatIconModule, MatDialogModule],
   template: `
-    <div class="confirm-modal">
+    <div class="modal-wrapper">
+
       <button class="close-btn" (click)="onCancel()" aria-label="Fechar">
-        <i class="bi bi-x-lg"></i>
+        <mat-icon>close</mat-icon>
       </button>
 
-      <h3>Excluir minhas medidas</h3>
-      <p>Tem certeza de que deseja excluir <strong>{{ data.medida.label }}</strong>?</p>
+      <h2 class="title">
+        <mat-icon class="warn-icon">warning</mat-icon>
+        Excluir medidas
+      </h2>
 
-      <div class="dialog-actions">
-        <button mat-button (click)="onCancel()">Cancelar</button>
-        <button mat-raised-button color="warn" (click)="onConfirm()">Excluir</button>
+      <p class="message">
+        Tem certeza que deseja excluir
+        <strong>{{ data.medida.label }}</strong>?
+      </p>
+
+      <div class="actions">
+        <button mat-stroked-button color="primary" (click)="onCancel()">
+          Cancelar
+        </button>
+
+        <button mat-flat-button color="warn" (click)="onConfirm()">
+          Excluir
+        </button>
       </div>
+
     </div>
   `,
   styles: [`
-    .confirm-modal { position: relative; padding: 1rem 0.5rem; color: #fff; }
-    .confirm-modal h3 { margin: 0 0 8px; color: #fff; font-size: 18px; }
-    .confirm-modal p { margin: 0 0 16px; color: rgba(255,255,255,0.95); }
-    .close-btn { position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: #fff; }
-    .dialog-actions { display:flex; gap:0.5rem; justify-content:flex-end; }
+    .modal-wrapper {
+      padding: 1rem;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .title {
+      margin: 0 0 12px;
+      font-size: 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .warn-icon {
+      color: #d32f2f;
+    }
+
+    .message {
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
   `]
 })
 export class DialogConfirmacao {
@@ -99,6 +144,7 @@ export class DialogConfirmacao {
   onCancel(): void {
     this.dialogRef.close('cancel');
   }
+
   onConfirm(): void {
     this.dialogRef.close('confirm');
   }

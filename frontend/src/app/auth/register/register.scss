@@ -1,4 +1,4 @@
-@use "sass:color";
+@use 'sass:color';
 
 :host {
   display: flex;
@@ -116,12 +116,17 @@
       justify-content: space-between;
       margin-top: 2rem;
 
-      button {
+      button,
+      ::ng-deep .mat-mdc-stroked-button {
         flex: 1;
         margin: 0 0.5rem;
         font-weight: 600;
         border-radius: 8px;
-        padding: 0.8rem;
+        padding: 0.8rem !important;
+        height: 48px !important; // força alturas iguais
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .btn-outline {
