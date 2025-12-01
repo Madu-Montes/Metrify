@@ -1,80 +1,56 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
+import { ApiService } from '../../services/api.service';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatIconModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, TitleCasePipe],
   templateUrl: './register.html',
   styleUrls: ['./register.scss'],
 })
-export class Register implements OnInit {
-  form!: FormGroup;
+export class Register {
+  form: any;
 
-  constructor(private fb: FormBuilder, private router: Router, private location: Location) {}
-
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder, private api: ApiService, private router: Router) {
     this.form = this.fb.group({
-      busto: ['', [Validators.required, Validators.pattern(/^\d{1,3}$/)]],
-      torax: ['', [Validators.required, Validators.pattern(/^\d{1,3}$/)]],
-      cintura: ['', [Validators.required, Validators.pattern(/^\d{1,3}$/)]],
-      quadril: ['', [Validators.required, Validators.pattern(/^\d{1,3}$/)]],
-      coxa: ['', [Validators.required, Validators.pattern(/^\d{1,3}$/)]],
-      calcado: ['', [Validators.pattern(/^\d{1,2}$/)]],
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      measurements: this.fb.group({
+        busto: [''],
+        torax: [''],
+        cintura: [''],
+        quadril: [''],
+        coxa: [''],
+        calcado: ['']
+      }),
     });
-
-    const medidasSalvas = localStorage.getItem('metrify_medidas');
-    if (medidasSalvas) {
-      this.form.patchValue(JSON.parse(medidasSalvas));
-    }
   }
-
-  onSubmit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      alert('Por favor, preencha todos os campos corretamente.');
-      return;
-    }
-
-    const medidas = this.form.value;
-    localStorage.setItem('metrify_medidas', JSON.stringify(medidas));
-
-    alert('Medidas salvas com sucesso!');
-    this.router.navigate(['/dashboard']);
-  }
-
-  onInputNumber(event: any, field: string): void {
-    const input = event.target as HTMLInputElement;
-    const maxLength = field === 'calçado' ? 2 : 3;
-    const numericValue = input.value.replace(/\D/g, '');
-    this.form.get(field)?.setValue(input.value);
-  }
-
   cancelar(): void {
-    this.location.back();
+    this.router.navigate(['/login']);
   }
 
-  isInvalid(field: string): boolean {
-    const control = this.form.get(field);
-    return !!(control && control.invalid && control.touched);
+  verCodigoAcesso(): void {
+    this.router.navigate(['/dashboard']);
+    console.log('Navegando para o Dashboard...');
   }
 
-  verCodigoAcesso(event: Event) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.router.navigate(['/codigo-acesso']);
+  onInputNumber(event: Event, controlName: string): void {
+    const inputElement = event.target as HTMLInputElement;
+    let value = inputElement.value;
+    value = value.replace(/[^0-9.]/g, '');
+    inputElement.value = value;
+  }
+
+  onSubmit() {
+    if (this.form.invalid) return;
+
+    this.api.register(this.form.value).subscribe({
+      next: () => this.router.navigate(['/login']),
+      error: (err) => console.error('Erro no register:', err),
+    });
   }
 }

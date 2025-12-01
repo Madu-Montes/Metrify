@@ -1,83 +1,51 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  Validators,
-  ReactiveFormsModule,
-  AbstractControl,
-  ValidationErrors,
-} from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register-user',
+  templateUrl: './register-user.html',
+  styleUrls: ['./register-user.scss'],
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
-    RouterModule,
-  ],
-  templateUrl: './register-user.html',
-  styleUrls: ['./register-user.scss'],
+    MatButtonModule
+  ]
 })
-export class RegisterUser implements OnInit {
-  registerForm: any;
+export class RegisterUser {
+  registerForm: FormGroup;
+  formSubmitted = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {}
-
-  ngOnInit(): void {
-    this.registerForm = this.fb.group(
-      {
-        nome: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        senha: ['', [Validators.required, Validators.minLength(6)]],
-        confirmarSenha: ['', Validators.required],
-      },
-      { validators: this.passwordMatchValidator }
-    );
-  }
-
-  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const senha = control.get('senha')?.value;
-    const confirmarSenha = control.get('confirmarSenha')?.value;
-    return senha === confirmarSenha ? null : { senhaMismatch: true };
+  constructor(private fb: FormBuilder) {
+    this.registerForm = this.fb.group({
+      nome: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      senha: ['', [Validators.required, Validators.minLength(6)]],
+      confirmarSenha: ['', Validators.required]
+    });
   }
 
   onSubmit(): void {
-    if (this.registerForm.invalid) {
-      this.registerForm.markAllAsTouched();
-      if (this.registerForm.errors?.['senhaMismatch']) {
-        alert('As senhas não coincidem!');
-      }
-      return;
+    this.formSubmitted = true;
+
+    if (this.registerForm.valid) {
+      console.log('Formulário enviado:', this.registerForm.value);
+      alert('Cadastro realizado com sucesso!');
+      this.registerForm.reset();
+      this.formSubmitted = false;
+    } else {
+      console.log('Formulário inválido');
+      alert('Preencha todos os campos corretamente!');
     }
-
-    const { nome, email, senha } = this.registerForm.value;
-    
-    const userCode = crypto?.randomUUID?.() ?? this.simpleRandomCode();
-
-    const user = { nome, email, senha, code: userCode };
-
-    const users = JSON.parse(localStorage.getItem('metrify_users') || '[]');
-    users.push(user);
-    localStorage.setItem('metrify_users', JSON.stringify(users));
-
-    localStorage.setItem('metrify_user', JSON.stringify(user));
-
-    alert('Conta criada com sucesso!');
-    this.router.navigate(['/code-access']);
   }
 
-  private simpleRandomCode(len = 8): string {
-    const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
-    let s = '';
-    for (let i = 0; i < len; i++) s += chars.charAt(Math.floor(Math.random() * chars.length));
-    return s;
+  getControl(controlName: string) {
+    return this.registerForm.get(controlName);
   }
 }

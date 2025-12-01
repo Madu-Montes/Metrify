@@ -17,6 +17,6 @@ mongoose_1.default
     .connect(process.env.MONGO_URI)
     .then(() => console.log("MongoDB connected!"))
     .catch((err) => console.error("Error connecting to Mongo:", err));
-app.listen(3000, () => {
-    console.log("Server running on port 3000");
+app.listen(5000, () => {
+    console.log("Server running on port 5000");
 });

@@ -1,69 +1,61 @@
-import { Request, Response } from 'express';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import User, { IUser } from '../models/User.model';
-import LoginHistory from '../models/LoginHistory.model';
+import { Request, Response } from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { User } from "../models/User.model";
 
-const JWT_EXPIRES = '1d';
+const JWT_SECRET = process.env.JWT_SECRET || "dev_secret";
 
 export const register = async (req: Request, res: Response) => {
   try {
-    const { nome, email, senha } = req.body;
-    if (!nome || !email || !senha) {
-      return res.status(400).json({ error: 'nome, email e senha são obrigatórios.' });
-    }
+    const { name, email, password, measurements } = req.body;
 
-    const existing = await User.findOne({ email }).exec();
-    if (existing) return res.status(400).json({ error: 'Usuário já existe.' });
+    const passwordHash = await bcrypt.hash(password, 10);
 
-    const hashed = await bcrypt.hash(senha, 10);
-
-    const newUser = await User.create({
-      nome,
+    const user = await User.create({
+      name,
       email,
-      senha_hash: hashed,   
+      passwordHash,
+      measurements
     });
 
-    const safeUser = {
-      id: newUser._id,
-      nome: newUser.nome,
-      email: newUser.email,
-      codigo_acesso: (newUser as any).codigo_acesso ?? null
-    };
+    return res.status(201).json({ 
+      message: "Usuário registrado com sucesso", 
+      user 
+    });
 
-    return res.status(201).json({ message: 'Usuário cadastrado!', user: safeUser });
-  } catch (err: any) {
-    console.error('register error', err);
-    return res.status(500).json({ error: 'Erro no registro.' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Erro ao registrar usuário" });
   }
 };
 
 export const login = async (req: Request, res: Response) => {
   try {
-    const { email, senha } = req.body;
-    if (!email || !senha) return res.status(400).json({ error: 'email e senha são obrigatórios.' });
+    const { email, password } = req.body;
 
-    const user = await User.findOne({ email }).exec() as IUser | null;
-    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+    const user = await User.findOne({ email });
+    if (!user) return res.status(401).json({ msg: "Credenciais inválidas" });
 
-    const match = await bcrypt.compare(senha, (user as any).senha_hash);
-    if (!match) return res.status(401).json({ error: 'Senha incorreta.' });
+    const isMatch = await bcrypt.compare(password, user.passwordHash);
+    if (!isMatch) return res.status(401).json({ msg: "Credenciais inválidas" });
 
-    const payload = { id: user._id, email: user.email };
-    const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: JWT_EXPIRES });
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      JWT_SECRET,
+      { expiresIn: "7d" }
+    );
 
-    await LoginHistory.create({
-      usuario_id: user._id,
-      data_login: new Date(),
-    });
-
-    return res.status(200).json({
-      message: 'Login realizado!',
+    return res.json({
       token,
-      user: { id: user._id, nome: user.nome, email: user.email }
+      user: {
+        name: user.name,
+        email: user.email,
+        accessCode: user.accessCode
+      }
     });
-  } catch (err: any) {
-    console.error('login error', err);
-    return res.status(500).json({ error: 'Erro no login.' });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Erro no servidor" });
   }
 };
