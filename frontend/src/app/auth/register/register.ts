@@ -3,11 +3,12 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { CommonModule, TitleCasePipe } from '@angular/common';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TitleCasePipe],
+  imports: [CommonModule, ReactiveFormsModule, TitleCasePipe, HeaderComponent],
   templateUrl: './register.html',
   styleUrls: ['./register.scss'],
 })
@@ -16,16 +17,13 @@ export class Register {
 
   constructor(private fb: FormBuilder, private api: ApiService, private router: Router) {
     this.form = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
       measurements: this.fb.group({
         busto: [''],
         torax: [''],
         cintura: [''],
         quadril: [''],
         coxa: [''],
-        calcado: ['']
+        calcado: [''],
       }),
     });
   }
@@ -48,9 +46,26 @@ export class Register {
   onSubmit() {
     if (this.form.invalid) return;
 
-    this.api.register(this.form.value).subscribe({
-      next: () => this.router.navigate(['/login']),
-      error: (err) => console.error('Erro no register:', err),
+    const medidas = this.form.value.measurements;
+
+    this.api.saveMeasures(medidas).subscribe({
+      next: (res) => {
+        console.log('Medidas salvas:', res);
+
+        // salvar no localStorage num formato padronizado
+        const medidasArray = Object.keys(medidas).map((key) => ({
+          label: key.charAt(0).toUpperCase() + key.slice(1),
+          valor: medidas[key],
+        }));
+
+        localStorage.setItem('metrify_medidas', JSON.stringify(medidasArray));
+
+        // navega pro dashboard
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        console.error('Erro ao salvar medidas:', err);
+      },
     });
   }
 }

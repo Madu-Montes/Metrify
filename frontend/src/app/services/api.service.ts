@@ -3,10 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-
   private baseUrl = 'http://localhost:5000/api';
 
   constructor(private http: HttpClient) {}
@@ -14,6 +13,18 @@ export class ApiService {
   register(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/register`, data);
   }
+
+  saveMeasures(data: any): Observable<any> {
+  return this.http.post(`${this.baseUrl}/measures`, data);
+}
+
+updateMeasures(data: any): Observable<any> {
+  return this.http.put(`${this.baseUrl}/measures`, data);
+}
+
+getMeasures(): Observable<any> {
+  return this.http.get(`${this.baseUrl}/measures`);
+}
 
   login(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/login`, data);

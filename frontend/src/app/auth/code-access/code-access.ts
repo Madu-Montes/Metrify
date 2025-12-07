@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-codigo-acesso',
   standalone: true,
-  imports: [CommonModule, MatButtonModule],
+  imports: [CommonModule, MatButtonModule, HeaderComponent],
   templateUrl: './code-access.html',
   styleUrls: ['./code-access.scss']
 })

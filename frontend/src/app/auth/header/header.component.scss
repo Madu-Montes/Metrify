@@ -1,0 +1,18 @@
+.header {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2e7d32;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+}

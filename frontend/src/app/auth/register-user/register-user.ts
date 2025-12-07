@@ -4,45 +4,52 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register-user',
   templateUrl: './register-user.html',
   styleUrls: ['./register-user.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule
-  ]
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, RouterModule],
 })
 export class RegisterUser {
   registerForm: FormGroup;
   formSubmitted = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.registerForm = this.fb.group({
-      nome: ['', Validators.required],
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      senha: ['', [Validators.required, Validators.minLength(6)]],
-      confirmarSenha: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required],
     });
   }
 
   onSubmit(): void {
-    this.formSubmitted = true;
-
-    if (this.registerForm.valid) {
-      console.log('Formulário enviado:', this.registerForm.value);
-      alert('Cadastro realizado com sucesso!');
-      this.registerForm.reset();
-      this.formSubmitted = false;
-    } else {
-      console.log('Formulário inválido');
+    if (this.registerForm.invalid) {
       alert('Preencha todos os campos corretamente!');
+      return;
     }
+
+    const { name, email, password, confirmPassword } = this.registerForm.value;
+
+    if (password !== confirmPassword) {
+      alert('Senhas não coincidem');
+      return;
+    }
+
+    this.authService.register(name.trim(), email.trim(), password).subscribe({
+      next: (res: { message: string; token?: string }) => {
+        alert('Cadastro realizado com sucesso!');
+        this.registerForm.reset();
+      },
+      error: (err: { error: { message: string } }) => {
+        console.error(err);
+        alert('Erro no cadastro: ' + err.error.message);
+      },
+    });
   }
 
   getControl(controlName: string) {

@@ -1,16 +1,22 @@
 <div class="mobile-frame">
   <div class="register-container">
+    <app-header></app-header>
     <div class="register-header">
       <img src="assets/images/logo.svg" alt="Logo" class="logo" />
       <h2>Minhas Medidas</h2>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="input-group" *ngFor="let field of ['busto', 'torax', 'cintura', 'quadril', 'coxa', 'calçado']">
-        <label [for]="field">{{ field | titlecase }}:</label>
-        <input [id]="field" inputmode="numeric" pattern="[0-9]*" formControlName="{{ field }}"
-          placeholder="{{ field === 'calçado' ? 'nº' : 'cm' }}" maxlength="{{ field === 'calçado' ? 2 : 3 }}"
-          (input)="onInputNumber($event, field)" />
+
+      <div formGroupName="measurements">
+
+        <div class="input-group" *ngFor="let field of ['busto', 'torax', 'cintura', 'quadril', 'coxa', 'calcado']">
+          <label [for]="field">{{ field | titlecase }}:</label>
+
+          <input [id]="field" inputmode="numeric" pattern="[0-9]*" [formControlName]="field"
+            placeholder="{{ field === 'calcado' ? 'nº' : 'cm' }}" maxlength="{{ field === 'calcado' ? 2 : 3 }}"
+            (input)="onInputNumber($event, field)" />
+        </div>
 
       </div>
 
@@ -20,8 +26,9 @@
         <button mat-stroked-button color="accent" type="button" class="btn-outline" (click)="verCodigoAcesso()">
           Ver código
         </button>
-
       </div>
+
     </form>
+
   </div>
 </div>

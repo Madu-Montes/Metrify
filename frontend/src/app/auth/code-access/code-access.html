@@ -1,10 +1,11 @@
 <div class="mobile-frame">
+  <app-header></app-header>
   <div class="code-access-container">
     <img src="assets/images/logo.svg" alt="Logo" class="logo" />
     <h2>Gerar código de acesso</h2>
 
     <div class="qr-wrapper" *ngIf="qrUrl">
-      
+
       <img [src]="qrUrl" alt="QR Code" class="qr" />
     </div>
 
