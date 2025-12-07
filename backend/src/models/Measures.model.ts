@@ -11,4 +11,4 @@ const MeasureSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-export default mongoose.model('Measure', MeasureSchema);
+export default mongoose.model('Measures', MeasureSchema);

@@ -1,27 +1,18 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret';
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.headers.authorization?.split(" ")[1];
 
-export function authMiddleware(req: Request, res: Response, next: NextFunction) {
-  const auth = req.headers.authorization;
-
-  if (!auth) {
-    return res.status(401).json({ msg: 'No token' });
+  if (!token) {
+    return res.status(401).json({ error: "Token não encontrado." });
   }
-
-  const parts = auth.split(' ');
-  if (parts.length !== 2) {
-    return res.status(401).json({ msg: 'Token malformado' });
-  }
-
-  const token = parts[1];
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
-    req.userId = decoded.userId;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
+    req.userId = decoded.userId; // aqui agora funciona
     next();
-  } catch (err) {
-    return res.status(401).json({ msg: 'Token inválido' });
+  } catch (error) {
+    return res.status(401).json({ error: "Token inválido." });
   }
-}
+};

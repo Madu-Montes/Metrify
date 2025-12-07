@@ -5,7 +5,7 @@ import { User } from "../models/User.model";
 export const getUser = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const user = await User.findById(id).select('-senha');
+    const user = await User.findById(id).select('-password');
     if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
 
     return res.status(200).json(user);
