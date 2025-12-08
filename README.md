@@ -48,6 +48,8 @@ docker run -p 4200:4200 metrify-frontend
 - Frontend: http://localhost:4200
 - Backend: http://localhost:5000
 
+### Atenção
+Não se esqueça de estar com o DOCKER rodando em sua máquina! Aguarde até aparecer “Docker is running” no canto inferior direito.
 ---
 
 ## 2. Como Rodar Localmente Sem Docker
@@ -104,9 +106,10 @@ Inclui Node 18, build Angular e servidor.
 
 ---
 
-## 6. Teste Rápido para o Professor
-### Via Docker
+## 6. Teste Rápido
 ```
+cd metrify (raiz do projeto)
+
 docker build -t metrify-backend -f backend/backend.Dockerfile backend
 docker run -p 5000:5000 metrify-backend
 
