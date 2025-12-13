@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metrify | Medidas Públicas</title>
+  <style>
+    * { box-sizing: border-box; font-family: Inter, system-ui, Arial, sans-serif; }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #eaeaea;
+    }
+
+    .mobile-frame {
+      width: 390px;
+      height: 844px;
+      border: 12px solid #000;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(0,0,0,0.25);
+      background-color: #fafafa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background-color: #256d4b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .input-group {
+      background-color: #788d83;
+      border-radius: 12px;
+      width: 280px;
+      height: 50px;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .input-group span {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .input-group strong {
+      background-color: #fff;
+      color: #000;
+      border-radius: 10px;
+      height: 39px;
+      width: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .code-input {
+      width: 280px;
+      margin-bottom: 1.5rem;
+    }
+
+    .code-input input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      width: 280px;
+    }
+
+    button {
+      flex: 1;
+      height: 48px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background-color: #256d4b;
+      color: #fff;
+    }
+
+    .btn-outline {
+      border: 1px solid #256d4b;
+      background-color: transparent;
+      color: #256d4b;
+    }
+
+    .btn-outline:hover {
+      background-color: #256d4b;
+      color: #fff;
+    }
+
+    .status {
+      margin-bottom: 1rem;
+      font-size: 14px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-frame">
+    <div class="container">
+      <div class="header">
+          <h1>Metrify </h1>
+      </div>
+
+      <div class="code-input">
+        <input id="code" placeholder="Cole o código de acesso" />
+      </div>
+
+      <div id="status" class="status"></div>
+
+      <div id="measures" style="display:none">
+        <div class="input-group"><span>Busto:</span><strong id="busto"></strong></div>
+        <div class="input-group"><span>Tórax:</span><strong id="torax"></strong></div>
+        <div class="input-group"><span>Cintura:</span><strong id="cintura"></strong></div>
+        <div class="input-group"><span>Quadril:</span><strong id="quadril"></strong></div>
+        <div class="input-group"><span>Coxa:</span><strong id="coxa"></strong></div>
+        <div class="input-group"><span>Calçado:</span><strong id="numeroCalcado"></strong></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" onclick="buscar()">Buscar</button>
+        <button class="btn-outline" onclick="limpar()">Limpar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function buscar() {
+      const code = document.getElementById('code').value.trim();
+      const status = document.getElementById('status');
+      const container = document.getElementById('measures');
+
+      status.textContent = '';
+      container.style.display = 'none';
+
+      if (!code) {
+        status.textContent = 'Informe um código válido.';
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost:5000/api/public/${code}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          status.textContent = data.error || 'Erro ao buscar medidas.';
+          return;
+        }
+
+        busto.textContent = data.busto + ' cm';
+        torax.textContent = data.torax + ' cm';
+        cintura.textContent = data.cintura + ' cm';
+        quadril.textContent = data.quadril + ' cm';
+        coxa.textContent = data.coxa + ' cm';
+        numeroCalcado.textContent = data.numeroCalcado;
+
+        container.style.display = 'block';
+      } catch {
+        status.textContent = 'Erro ao conectar com a API.';
+      }
+    }
+
+    function limpar() {
+      document.getElementById('code').value = '';
+      document.getElementById('measures').style.display = 'none';
+      document.getElementById('status').textContent = '';
+    }
+  </script>
+</body>
+</html>

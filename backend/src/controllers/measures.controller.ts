@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 export const upsertMeasures = async (req: any, res: any) => {
   try {
     const userId = req.userId;
-    
+
     const measures = await Measures.findOneAndUpdate(
       { userId },
       { ...req.body, userId },
@@ -21,14 +21,14 @@ export const upsertMeasures = async (req: any, res: any) => {
 
     if (!user.accessCode) {
       user.accessCode = uuidv4();
-      await user.save(); 
+      await user.save();
     }
+
     return res.status(200).json({
       message: "Medidas salvas com sucesso",
       accessCode: user.accessCode,
       measures,
     });
-
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Erro ao salvar medidas" });
@@ -81,7 +81,14 @@ export const getMeasuresByPublicCode = async (req: Request, res: Response) => {
       });
     }
 
-    return res.status(200).json(measures);
+    return res.status(200).json({
+      busto: measures.busto,
+      torax: measures.torax,
+      cintura: measures.cintura,
+      quadril: measures.quadril,
+      coxa: measures.coxa,
+      numeroCalcado: measures.calcado,
+    });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Erro ao buscar medidas públicas." });

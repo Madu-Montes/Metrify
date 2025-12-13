@@ -19,47 +19,30 @@ export class CodigoAcesso implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    const userData = localStorage.getItem('metrify_user');
-    if (!userData) {
-      this.router.navigate(['/login']);
+    const code = localStorage.getItem('accessCode');
+
+    if (!code) {
+      alert('Código de acesso não encontrado.');
+      this.router.navigate(['/dashboard']);
       return;
     }
 
-    const user = JSON.parse(userData);
-    if (!user.code) {
-      user.code = crypto?.randomUUID?.() ?? this.simpleRandomCode();
-      const users = JSON.parse(localStorage.getItem('metrify_users') || '[]');
-      const idx = users.findIndex((u: any) => u.email === user.email);
-      if (idx >= 0) { users[idx].code = user.code; localStorage.setItem('metrify_users', JSON.stringify(users)); }
-      localStorage.setItem('metrify_user', JSON.stringify(user));
-    }
-
-    this.userCode = user.code;
-    this.qrUrl = this.buildQrUrl(this.userCode);
+    this.userCode = code;
+    this.qrUrl = this.buildQrUrl(code);
   }
 
   buildQrUrl(value: string) {
-    const size = 250;
-    return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(value)}&format=svg`;
+    return `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(value)}`;
   }
 
   copiarCodigo() {
-    if (!this.userCode) return;
     navigator.clipboard.writeText(this.userCode).then(() => {
       alert('Código copiado!');
-    }, () => {
-      alert('Não foi possível copiar. Copie manualmente.');
     });
   }
 
   voltar() {
     this.router.navigate(['/dashboard']);
   }
-
-  private simpleRandomCode(len = 8) {
-    const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
-    let s = '';
-    for (let i = 0; i < len; i++) s += chars.charAt(Math.floor(Math.random() * chars.length));
-    return s;
-  }
 }
+

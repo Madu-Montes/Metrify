@@ -48,26 +48,31 @@ export class Register {
   }
 
   onSubmit() {
-    if (this.form.invalid) return;
+  if (this.form.invalid) return;
 
-    const medidas = this.form.value.measurements;
+  const medidas = this.form.value.measurements;
 
-    this.api.saveMeasures(medidas).subscribe({
-      next: (res) => {
-        console.log('Medidas salvas:', res);
+  this.api.saveMeasures(medidas).subscribe({
+    next: (res: any) => {
+      console.log('Medidas salvas:', res);
 
-        const medidasArray = Object.keys(medidas).map((key) => ({
-          label: key.charAt(0).toUpperCase() + key.slice(1),
-          valor: medidas[key],
-        }));
+      if (res.accessCode) {
+        localStorage.setItem('accessCode', res.accessCode);
+      }
 
-        localStorage.setItem('metrify_medidas', JSON.stringify(medidasArray));
+      const medidasArray = Object.keys(medidas).map((key) => ({
+        label: key.charAt(0).toUpperCase() + key.slice(1),
+        valor: medidas[key],
+      }));
 
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        console.error('Erro ao salvar medidas:', err);
-      },
-    });
-  }
+      localStorage.setItem('metrify_medidas', JSON.stringify(medidasArray));
+
+      this.router.navigate(['/dashboard']);
+    },
+    error: (err) => {
+      console.error('Erro ao salvar medidas:', err);
+    },
+  });
+}
+
 }

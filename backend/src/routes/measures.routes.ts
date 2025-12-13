@@ -9,6 +9,6 @@ router.post("/", authMiddleware, upsertMeasures);
 router.put("/", authMiddleware, upsertMeasures);
 router.delete("/", authMiddleware, deleteMeasures);
 
-router.get("/public/:code", getMeasuresByPublicCode);
+/* router.get("/public/:code", getMeasuresByPublicCode); */
 
 export default router;
