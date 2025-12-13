@@ -10,19 +10,24 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<any> {
-    const payload = { email, password: password };
-
-    return this.http.post(`${this.apiUrl}/login`, payload).pipe(
-      tap((res: any) => {
+  login(email: string, password: string) {
+  return this.http.post<any>(`${this.apiUrl}/login`, { email, password })
+    .pipe(
+      tap(res => {
         localStorage.setItem('metrify_token', res.token);
-        console.log('TOKEN SALVO?', localStorage.getItem('metrify_token'));
+
+        localStorage.setItem(
+          'metrify_user',
+          JSON.stringify(res.user)
+        );
       })
     );
-  }
+}
 
-   register(name: string, email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, { name, email, password });
+  register(name: string, email: string, password: string): Observable<any> {
+    const payload = { name, email, password };
+
+    return this.http.post(`${this.apiUrl}/register`, payload);
   }
 
   logout() {

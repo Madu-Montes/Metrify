@@ -15,25 +15,29 @@ import { HeaderComponent } from '../header/header.component';
 export class Register {
   form: any;
 
-  constructor(private fb: FormBuilder, private api: ApiService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private api: ApiService,
+    private router: Router
+  ) {
     this.form = this.fb.group({
       measurements: this.fb.group({
-        busto: [''],
-        torax: [''],
-        cintura: [''],
-        quadril: [''],
-        coxa: [''],
-        calcado: [''],
+        busto: ['', Validators.required],
+        torax: ['', Validators.required],
+        cintura: ['', Validators.required],
+        quadril: ['', Validators.required],
+        coxa: ['', Validators.required],
+        calcado: ['', Validators.required],
       }),
     });
   }
+
   cancelar(): void {
     this.router.navigate(['/login']);
   }
 
   verCodigoAcesso(): void {
     this.router.navigate(['/dashboard']);
-    console.log('Navegando para o Dashboard...');
   }
 
   onInputNumber(event: Event, controlName: string): void {
@@ -52,7 +56,6 @@ export class Register {
       next: (res) => {
         console.log('Medidas salvas:', res);
 
-        // salvar no localStorage num formato padronizado
         const medidasArray = Object.keys(medidas).map((key) => ({
           label: key.charAt(0).toUpperCase() + key.slice(1),
           valor: medidas[key],
@@ -60,7 +63,6 @@ export class Register {
 
         localStorage.setItem('metrify_medidas', JSON.stringify(medidasArray));
 
-        // navega pro dashboard
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {

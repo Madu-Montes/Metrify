@@ -11,6 +11,7 @@ import { HeaderComponent } from '../header/header.component';
   templateUrl: './code-access.html',
   styleUrls: ['./code-access.scss']
 })
+
 export class CodigoAcesso implements OnInit {
   userCode = '';
   qrUrl = '';

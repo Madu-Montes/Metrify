@@ -17,6 +17,11 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/measures", measuresRoutes);
 
+import publicRoutes from "./routes/public.routes";
+
+app.use("/api/public", publicRoutes);
+
+
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });

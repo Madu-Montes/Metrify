@@ -230,3 +230,9 @@
     background-color: red;
   }
 }
+
+button.inativo {
+  background-color: #b9bbb5 !important;
+  color: #777 !important;
+  cursor: not-allowed;
+}
