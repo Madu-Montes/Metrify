@@ -1,1 +1,83 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  /* Backgrounds */
+  --bg-primary: #07141F;
+  --bg-secondary: #0D2233;
+  --bg-card: #112B40;
+
+  /* Brand */
+  --color-primary: #39E6A5;
+  --color-primary-dark: #20B980;
+  --color-secondary: #2D9CDB;
+
+  /* Text */
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-disabled: #64748B;
+
+  /* Borders */
+  --border-color: #1E3448;
+
+  /* Status */
+  --success: #39E6A5;
+  --warning: #FBBF24;
+  --danger: #EF4444;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  /* Shadows */
+  --shadow-card:
+    0 10px 30px rgba(0,0,0,0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg-primary);
+  font-family:
+    Inter,
+    Roboto,
+    Arial,
+    sans-serif;
+  color: var(--text-primary);
+
+}
+
+.btn {
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s;
+}
+
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #062014;
+
+  &:hover {
+    background: var(--color-primary-dark);
+  }
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+
+  &:hover {
+    background: var(--bg-secondary);
+  }
+}
