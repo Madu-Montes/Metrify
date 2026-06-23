@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../../features/auth/services/auth';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,4 +10,13 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
 })
-export class Sidebar {}
+export class Sidebar {
+  constructor(
+    private readonly authService: AuthService
+  ) {}
+
+  logout(){
+    this.authService.logout();
+  }
+
+}
