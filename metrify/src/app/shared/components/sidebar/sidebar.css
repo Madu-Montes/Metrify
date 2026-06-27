@@ -5,7 +5,7 @@
   padding: 24px;
   width: 100%;
   flex-shrink: 0;
-  background-color: #112B40;
+  background: #12343B;
   border-radius: 0 24px 24px 0;
   overflow: hidden;
 }
@@ -60,7 +60,7 @@
 }
 
 .menu-item.active {
-  background: rgba(57, 230, 165, .12);
+  background: var(--color-primary-light);
   color: var(--color-primary);
 }
 

@@ -1,46 +1,42 @@
-header{
+header {
   height: 90px;
-  display: flex;align-items: center;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 0 32px;
   border-bottom: 1px solid var(--border-color);
 }
 
-h1{
+h1 {
   margin: 0;
   font-size: 24px;
 }
 
-p{
-  margin: 5px 0 0;
-  color: var(--text-secondary);
-}
-
-.actions{
+.actions {
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-button{
+button {
   background: transparent;
   border: none;
   color: white;
   cursor: pointer;
 }
 
-.profile{
+.profile {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.avatar{
+.avatar {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: var(--color-primary);
-  color: #062024;
+  background: #D9F1EC;
+  color: #2A9D8F;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,7 +44,7 @@ button{
 }
 
 .profile span {
-display:block;
-font-size:12px;
-color:var(--text-secondary);
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary);
 }

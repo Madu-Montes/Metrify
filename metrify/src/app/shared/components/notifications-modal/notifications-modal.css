@@ -1,0 +1,57 @@
+.modal {
+  padding: 24px;
+
+  .header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header button{
+    background-color: transparent;
+    border: none;
+  }
+
+  .header mat-icon{
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    color: var(--text-primary);
+  }
+
+  .notifications {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 450px;
+    overflow-y: auto;
+  }
+
+  .notification {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: var(--bg-primary);
+    border-radius: 16px;
+
+    mat-icon {
+      color: var(--color-primary);
+    }
+
+    strong {
+      display: block;
+      color: var(--text-primary);
+    }
+
+    p {
+      margin: 4px 0 0;
+      color: var(--text-secondary);
+    }
+
+  }
+
+}

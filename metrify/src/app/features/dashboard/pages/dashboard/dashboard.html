@@ -1,9 +1,51 @@
 <div class="dashboard">
-  <section class="welcome">
-    <h1>Good morning, Dr. Fulana ☀️</h1>
 
-    <p>Check your summary for today.</p>
-  </section>
+  <div class="welcome">
+
+    <div class="card greeting">
+      <h1> Good morning, Dr. Fulana! 🌞</h1>
+      <p>Check your summary for today</p>
+    </div>
+
+    <div class="notifications">
+
+      <div class="header-notifications-summary">
+        <mat-icon>notifications</mat-icon>
+        <p>Today Summary</p>
+        <button (click)="openNotifications()">See all</button>
+      </div>
+
+      <div class="notification-list">
+
+        <div class="card notification-item">
+          <div class="service-information">
+            <mat-icon>event</mat-icon>
+            <p>Appointment | 09:30</p>
+          </div>
+          <span>Julie Jones</span>
+        </div>
+
+        <div class="card notification-item">
+          <div class="service-information">
+            <mat-icon>event</mat-icon>
+            <p>Appointment | 09:30</p>
+          </div>
+          <span>Julie Jones</span>
+        </div>
+
+        <div class="card notification-item">
+          <div class="service-information">
+            <mat-icon>event</mat-icon>
+            <p>Appointment | 09:30</p>
+          </div>
+          <span>Julie Jones</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
 
   <section class="stats">
 
@@ -30,8 +72,6 @@
       <strong>94%</strong>
       <small>Excellent</small>
     </div>
-
-
 
   </section>
 </div>

@@ -1,35 +1,37 @@
 :root {
-  /* Backgrounds */
-  --bg-primary: #07141F;
-  --bg-secondary: #0D2233;
-  --bg-card: #112B40;
+
+  /* Background */
+  --bg-primary: #F7FAF9;
+  --bg-secondary: #FFFFFF;
+
 
   /* Brand */
-  --color-primary: #39E6A5;
-  --color-primary-dark: #20B980;
-  --color-secondary: #2D9CDB;
+  --color-primary: #2A9D8F;
+  --color-primary-light: #D9F1EC;
+
+
+  /* Secondary */
+  --color-secondary: #264653;
+
 
   /* Text */
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-disabled: #64748B;
+  --text-primary: #19323C;
+  --text-secondary: #6B7F86;
+
 
   /* Borders */
-  --border-color: #1E3448;
+  --border-color: #E4ECE9;
+
 
   /* Status */
-  --success: #39E6A5;
-  --warning: #FBBF24;
-  --danger: #EF4444;
+  --success: #4CAF7A;
+  --warning: #E9A23B;
+  --danger: #D96C75;
 
-  /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+}
 
-  /* Shadows */
-  --shadow-card:
-    0 10px 30px rgba(0,0,0,0.25);
+.btn-primary:hover {
+  background: #238579;
 }
 
 * {
