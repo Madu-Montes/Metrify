@@ -72,6 +72,13 @@ input {
 
 .actions button{
   width: 150px;
+  border-radius: 16px;
+  transition: 0.3s;
+}
+
+.actions button:hover{
+  background-color: var(--color-secondary);
+  color: var(--bg-primary);
 }
 
 .actions a{

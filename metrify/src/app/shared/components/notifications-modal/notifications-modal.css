@@ -1,18 +1,24 @@
 .modal {
   padding: 24px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
 
-  .header{
+  .header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    flex-shrink: 0;
   }
 
-  .header button{
+  .header button {
     background-color: transparent;
     border: none;
   }
 
-  .header mat-icon{
+  .header mat-icon {
     margin-right: 10px;
     cursor: pointer;
   }
@@ -26,8 +32,27 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-height: 450px;
+
+    max-height: 320px;
     overflow-y: auto;
+
+    padding-right: 8px;
+
+    scrollbar-width: thin;
+    scrollbar-color: #19323C;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #9fcfc7;
+      border-radius: 10px;
+    }
   }
 
   .notification {
@@ -35,7 +60,7 @@
     align-items: center;
     gap: 16px;
     padding: 16px;
-    background: var(--bg-primary);
+    background-color: #2a9d9044;
     border-radius: 16px;
 
     mat-icon {
@@ -51,7 +76,5 @@
       margin: 4px 0 0;
       color: var(--text-secondary);
     }
-
   }
-
 }
