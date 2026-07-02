@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { MainLayout } from './layouts/main-layout/main-layout';
 
 export const routes: Routes = [
   {
@@ -11,22 +10,23 @@ export const routes: Routes = [
   {
     path: '',
 
-    loadComponent: () =>
-      import('./layouts/main-layout/main-layout').then((c) => c.MainLayout),
+    loadComponent: () => import('./layouts/main-layout/main-layout').then((c) => c.MainLayout),
 
     children: [
       {
         path: 'dashboard',
-
+        data: {
+          title: 'Dashboard',
+        },
         loadComponent: () =>
-          import('./features/dashboard/pages/dashboard/dashboard').then(
-            (c) => c.Dashboard,
-          ),
+          import('./features/dashboard/pages/dashboard/dashboard').then((c) => c.Dashboard),
       },
 
       {
         path: 'patients',
-
+        data: {
+          title: 'Patients',
+        },
         loadComponent: () =>
           import('./features/patients/pages/patients-list/patients-list').then(
             (c) => c.PatientsList,

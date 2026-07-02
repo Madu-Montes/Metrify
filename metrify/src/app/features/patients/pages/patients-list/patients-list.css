@@ -1,0 +1,55 @@
+.patients-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.page-header {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    margin: 0;
+    font-size: 28px;
+  }
+
+  p {
+    margin-top: 8px;
+    color: var(--text-secondary);
+  }
+
+}
+
+.add-button {
+
+  background: var(--color-primary);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+
+  input {
+
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+  }
+
+  button {
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+
+  }
+
+}
