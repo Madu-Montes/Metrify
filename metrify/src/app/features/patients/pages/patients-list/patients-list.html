@@ -1,29 +1,25 @@
 <div class="patients-page">
-
   <div class="page-header">
     <div>
       <h2>Manage your patients</h2>
-      <p>Track patient information and health progress</p>
+      <p> Track patient information and health progress </p>
     </div>
-    <button class="add-button">+ Add Patient</button>
-
+    <button class="btn btn-primary add-button" (click)="addPatient()"> + Add Patient </button>
   </div>
 
   <div class="filters">
-    <input placeholder="Search patient...">
+    <div class="search">
+      <mat-icon>search</mat-icon>
+      <input type="text" placeholder="Search patient...">
+    </div>
 
-    <button>Status</button>
-
-    <button>Goal</button>
-
-    <button>Last appointment</button>
-
+    <button class="btn btn-filter">Status</button>
+    <button class="btn btn-filter">Goal</button>
+    <button class="btn btn-filter">Last appointment</button>
   </div>
 
-  <div class="table-container">
+  <app-patients-table [patients]="patients">
 
-    <!-- tabela entra aqui -->
-
-  </div>
+  </app-patients-table>
 
 </div>
