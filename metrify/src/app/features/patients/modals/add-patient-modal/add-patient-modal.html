@@ -1,0 +1,78 @@
+<div class="modal-patient">
+
+  <div class="header">
+    <h2>Add patient</h2>
+    <button type="button" (click)="onClickClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="patientForm" (ngSubmit)="save()" class="patient-form">
+
+    <!-- Name -->
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+
+      <input type="text" class="form-control" formControlName="name">
+
+      @if (patientForm.controls.name.invalid &&
+      patientForm.controls.name.touched) {
+
+      <small class="error">Name is required</small>
+
+      }
+    </div>
+
+    <div class="row g-3">
+
+      <!-- Age -->
+      <div class="col-md-3">
+        <label class="form-label">Age</label>
+
+        <input type="number" class="form-control" formControlName="age">
+      </div>
+
+      <!-- Gender -->
+      <div class="col-md-3">
+        <label class="form-label">Gender</label>
+
+        <select class="form-select" formControlName="gender">
+
+          <option value="">Select...</option>
+          <option value="Female">Female</option>
+          <option value="Male">Male</option>
+
+        </select>
+      </div>
+
+      <!-- Phone -->
+      <div class="col-md-6">
+        <label class="form-label">Phone</label>
+
+        <input type="text" class="form-control" formControlName="phone">
+      </div>
+
+      <!-- Email -->
+      <div class="col-md-6">
+        <label class="form-label">Email</label>
+
+        <input type="email" class="form-control" formControlName="email">
+      </div>
+
+      <!-- Goal -->
+      <div class="col-md-6">
+        <label class="form-label">Goal</label>
+
+        <input type="text" class="form-control" formControlName="goal">
+      </div>
+
+    </div>
+
+    <div class="footer mt-4">
+      <button type="button" class="btn" (click)="onClickClose()">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="patientForm.invalid">Save Patient</button>
+    </div>
+
+  </form>
+
+</div>

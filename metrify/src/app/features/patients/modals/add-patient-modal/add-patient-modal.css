@@ -1,0 +1,33 @@
+.modal-patient {
+  width: 100%;
+  max-width: 700px;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background-color: #fff;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+  }
+
+  .header button {
+    background-color: transparent;
+    border: none;
+  }
+
+  .header mat-icon {
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    color: var(--text-primary);
+  }
+}

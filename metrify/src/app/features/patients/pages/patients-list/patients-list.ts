@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Patient, PatientsTable } from '../../components/patients-table/patients-table';
 import { MatIcon } from '@angular/material/icon';
+import { AddPatientModal } from '../../modals/add-patient-modal/add-patient-modal';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-patients-list',
@@ -10,6 +12,8 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './patients-list.css',
 })
 export class PatientsList {
+  constructor(private dialog: MatDialog) {}
+
   patients: Patient[] = [
     {
       id: 1,
@@ -54,9 +58,8 @@ export class PatientsList {
   ];
 
   addPatient() {
-    /* this.dialog.open(AddPatientModal, {
-      width: '500px',
-      maxHeight: '80vh',
-    }); */
+    this.dialog.open(AddPatientModal, {
+      width: '750px',
+    });
   }
 }
